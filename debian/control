@@ -24,6 +24,8 @@ Depends:
     ${shlibs:Depends},
     ${misc:Depends},
     ofono-sailfish,
+Recommends:
+    lineageos-apndb,
 Description: oFono apndb provisioning plugin - built against Sailfish fork
  Apndb is an XML format used by Android for their APN database. This plugin
  allows oFono to use such database.
