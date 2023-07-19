@@ -8,6 +8,18 @@ pkg_check_modules(OFONO REQUIRED ofono)
 
 pkg_get_variable(OFONO_PLUGINDIR ofono plugindir)
 
+set(
+    SYSTEM_APNDB_PATH "/system/etc/apns-conf.xml"
+    CACHE STRING
+    "Path for system-level apns-conf.xml"
+)
+
+set(
+    CUSTOM_APNDB_PATH "/custom/etc/apns-conf.xml"
+    CACHE STRING
+    "Path for apns-conf.xml from customization tarball"
+)
+
 add_library(apndbplugin MODULE
     src/ubuntu-apndb.c
     src/ubuntu-apndb.h
@@ -31,6 +43,8 @@ target_compile_options(apndbplugin PRIVATE
 
 target_compile_definitions(apndbplugin PRIVATE
     VERSION="${CMAKE_PROJECT_VERSION}"
+    SYSTEM_APNDB_PATH="${SYSTEM_APNDB_PATH}"
+    CUSTOM_APNDB_PATH="${CUSTOM_APNDB_PATH}"
 )
 
 set_target_properties(apndbplugin PROPERTIES PREFIX "")
