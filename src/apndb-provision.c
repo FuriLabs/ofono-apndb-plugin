@@ -161,22 +161,22 @@ done:
 	return retval;
 }
 
-static struct ofono_gprs_provision_driver ubuntu_provision_driver = {
-	.name		= "Ubuntu APN database Provisioning",
+static struct ofono_gprs_provision_driver apndb_provision_driver = {
+	.name		= "Android-formated APN database Provisioning Plugin",
 	.get_settings	= provision_get_settings
 };
 
-static int ubuntu_provision_init(void)
+static int apndb_provision_init(void)
 {
-	return ofono_gprs_provision_driver_register(&ubuntu_provision_driver);
+	return ofono_gprs_provision_driver_register(&apndb_provision_driver);
 }
 
-static void ubuntu_provision_exit(void)
+static void apndb_provision_exit(void)
 {
-	ofono_gprs_provision_driver_unregister(&ubuntu_provision_driver);
+	ofono_gprs_provision_driver_unregister(&apndb_provision_driver);
 }
 
-OFONO_PLUGIN_DEFINE(ubuntu_provision,
-			"Ubuntu APN database Provisioning Plugin", VERSION,
+OFONO_PLUGIN_DEFINE(apndb_provision,
+			"Android-formated APN database Provisioning Plugin", VERSION,
 			OFONO_PLUGIN_PRIORITY_DEFAULT,
-			ubuntu_provision_init, ubuntu_provision_exit)
+			apndb_provision_init, apndb_provision_exit)

@@ -11,7 +11,7 @@ pkg_get_variable(OFONO_PLUGINDIR ofono plugindir)
 add_library(apndbplugin MODULE
     src/ubuntu-apndb.c
     src/ubuntu-apndb.h
-    src/ubuntu-provision.c
+    src/apndb-provision.c
 )
 
 target_include_directories(apndbplugin PRIVATE
