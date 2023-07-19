@@ -197,8 +197,10 @@ static enum ofono_gprs_context_type determine_apn_type(const char *types)
 		return OFONO_GPRS_CONTEXT_TYPE_INTERNET;
 	else if (strstr(types, "mms") != NULL)
 		return OFONO_GPRS_CONTEXT_TYPE_MMS;
+#ifdef UBUNTU_API
 	else if (strstr(types, "ia") != NULL)
 		return OFONO_GPRS_CONTEXT_TYPE_IA;
+#endif
 	else
 		return OFONO_GPRS_CONTEXT_TYPE_ANY;
 }
