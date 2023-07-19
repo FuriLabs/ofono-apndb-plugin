@@ -1,0 +1,10 @@
+obj-*/
+
+debian/.debhelper/
+debian/files
+debian/debhelper-build-stamp
+debian/*.substvars
+debian/*.debhelper.log
+
+debian/*/DEBIAN/
+debian/*/usr/
