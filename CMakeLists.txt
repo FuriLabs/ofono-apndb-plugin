@@ -1,12 +1,24 @@
 cmake_minimum_required(VERSION 3.10)
 project(ofono-apndb-plugin VERSION 0.20230719 LANGUAGES C)
 
+set(
+    OFONO_PKG "ofono"
+    CACHE STRING
+    "oFono package to build against"
+)
+
+option(
+    UBUNTU_API
+    "Whether oFono variant has Ubuntu-modified provisioning API"
+    FALSE
+)
+
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(GLIB REQUIRED glib-2.0)
-pkg_check_modules(OFONO REQUIRED ofono)
+pkg_check_modules(OFONO REQUIRED ${OFONO_PKG})
 
-pkg_get_variable(OFONO_PLUGINDIR ofono plugindir)
+pkg_get_variable(OFONO_PLUGINDIR ${OFONO_PKG} plugindir)
 
 set(
     SYSTEM_APNDB_PATH "/system/etc/apns-conf.xml"
@@ -46,6 +58,12 @@ target_compile_definitions(apndbplugin PRIVATE
     SYSTEM_APNDB_PATH="${SYSTEM_APNDB_PATH}"
     CUSTOM_APNDB_PATH="${CUSTOM_APNDB_PATH}"
 )
+
+if (UBUNTU_API)
+    target_compile_definitions(apndbplugin PRIVATE
+        UBUNTU_API
+    )
+endif ()
 
 set_target_properties(apndbplugin PROPERTIES PREFIX "")
 

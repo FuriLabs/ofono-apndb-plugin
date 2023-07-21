@@ -5,8 +5,9 @@ Build-Depends:
     cmake,
     debhelper-compat (= 12),
     libglib2.0-dev,
-# TODO: add other -dev packages, once we make them co-installable.
+    ofono-dev,
     ofono-sailfish-dev,
+    ofono-ubports-dev,
 Standards-Version: 4.6.0
 Section: libs
 Homepage: http://gitlab.com/ubports/development/core/ofono-apndb-plugin
@@ -14,8 +15,23 @@ Vcs-Browser: http://gitlab.com/ubports/development/core/ofono-apndb-plugin
 Vcs-Git: http://gitlab.com/ubports/development/core/ofono-apndb-plugin.git
 Rules-Requires-Root: no
 
-# TODO: add & build other packages, once we figure out how to make multiple
-# ofono-*-dev packages co-installable.
+Package: ofono-apndb-plugin
+Architecture: any
+Multi-Arch: same
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends},
+    ofono,
+Conflicts:
+    ofono-sailfish,
+    ofono-ubports,
+Recommends:
+    lineageos-apndb,
+Description: oFono apndb provisioning plugin - built against Sailfish fork
+ Apndb is an XML format used by Android for their APN database. This plugin
+ allows oFono to use such database.
+ .
+ This package is built against upstream variant of oFono.
 
 Package: ofono-sailfish-apndb-plugin
 Architecture: any
@@ -31,3 +47,18 @@ Description: oFono apndb provisioning plugin - built against Sailfish fork
  allows oFono to use such database.
  .
  This package is built against ofono-sailfish variant of oFono.
+
+Package: ofono-ubports-apndb-plugin
+Architecture: any
+Multi-Arch: same
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends},
+    ofono-ubports,
+Recommends:
+    lineageos-apndb,
+Description: oFono apndb provisioning plugin - built against Sailfish fork
+ Apndb is an XML format used by Android for their APN database. This plugin
+ allows oFono to use such database.
+ .
+ This package is built against ofono-ubports variant of oFono.
