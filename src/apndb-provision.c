@@ -39,11 +39,38 @@
 #include <ofono/gprs-provision.h>
 
 #include "ubuntu-apndb.h"
-#include "mbpi.h"
+
+/*
+ * Code copied from oFono's mbpi.c, licensed under GPL-2.0 only.
+ * Copied from the same commit as the rest of the code.
+ */
+
+#define _(x) case x: return (#x)
+
+static const char *mbpi_ap_type(enum ofono_gprs_context_type type)
+{
+	switch (type) {
+		_(OFONO_GPRS_CONTEXT_TYPE_ANY);
+		_(OFONO_GPRS_CONTEXT_TYPE_INTERNET);
+		_(OFONO_GPRS_CONTEXT_TYPE_MMS);
+		_(OFONO_GPRS_CONTEXT_TYPE_WAP);
+		_(OFONO_GPRS_CONTEXT_TYPE_IMS);
+#ifdef UBUNTU_API
+		_(OFONO_GPRS_CONTEXT_TYPE_IA);
+#endif
+	}
+
+	return "OFONO_GPRS_CONTEXT_TYPE_<UNKNOWN>";
+}
+
+#undef _
+
 
 static int provision_get_settings(const char *mcc, const char *mnc,
 				const char *spn,
+#ifdef UBUNTU_API
 				const char *imsi, const char *gid1,
+#endif
 				struct ofono_gprs_provision_data **settings,
 				int *count)
 {
@@ -53,6 +80,11 @@ static int provision_get_settings(const char *mcc, const char *mnc,
 	unsigned int i;
 	char *tmp;
 	int retval = 0;
+
+#ifndef UBUNTU_API
+	const char *imsi = NULL;
+	const char *gid1 = NULL;
+#endif
 
 	if ((tmp = getenv("OFONO_CUSTOM_MCC")) != NULL)
 		mcc = tmp;
@@ -129,22 +161,22 @@ done:
 	return retval;
 }
 
-static struct ofono_gprs_provision_driver ubuntu_provision_driver = {
-	.name		= "Ubuntu APN database Provisioning",
+static struct ofono_gprs_provision_driver apndb_provision_driver = {
+	.name		= "Android-formated APN database Provisioning Plugin",
 	.get_settings	= provision_get_settings
 };
 
-static int ubuntu_provision_init(void)
+static int apndb_provision_init(void)
 {
-	return ofono_gprs_provision_driver_register(&ubuntu_provision_driver);
+	return ofono_gprs_provision_driver_register(&apndb_provision_driver);
 }
 
-static void ubuntu_provision_exit(void)
+static void apndb_provision_exit(void)
 {
-	ofono_gprs_provision_driver_unregister(&ubuntu_provision_driver);
+	ofono_gprs_provision_driver_unregister(&apndb_provision_driver);
 }
 
-OFONO_PLUGIN_DEFINE(ubuntu_provision,
-			"Ubuntu APN database Provisioning Plugin", VERSION,
+OFONO_PLUGIN_DEFINE(apndb_provision,
+			"Android-formated APN database Provisioning Plugin", VERSION,
 			OFONO_PLUGIN_PRIORITY_DEFAULT,
-			ubuntu_provision_init, ubuntu_provision_exit)
+			apndb_provision_init, apndb_provision_exit)

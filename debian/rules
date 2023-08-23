@@ -1,0 +1,56 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+# see FEATURE AREAS in dpkg-buildflags(1)
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# see ENVIRONMENT in dpkg-buildflags(1)
+export DEB_CFLAGS_MAINT_APPEND = -Werror -Wall -pedantic -Wno-error=pedantic -Wno-error=variadic-macros
+
+OFONO_PKGS := ofono ofono-sailfish ofono-ubports
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	set -e; \
+	for pkg in $(OFONO_PKGS); do \
+		rm -rf debian/build-$$pkg debian/install-$$pkg; \
+	done
+
+override_dh_auto_configure:
+	set -e; \
+	for pkg in $(OFONO_PKGS); do \
+		mkdir -p debian/build-$$pkg debian/install-$$pkg; \
+		if [ "$$pkg" = ofono-ubports ]; then \
+			api_flag="-DUBUNTU_API=ON"; \
+		fi; \
+		dh_auto_configure -B debian/build-$$pkg -- \
+			-DOFONO_PKG=$$pkg \
+			-DSYSTEM_APNDB_PATH="/usr/share/lineageos-apndb/apns-conf.xml" \
+			$${api_flag}; \
+	done
+
+override_dh_auto_build:
+	set -e; \
+	for pkg in $(OFONO_PKGS); do \
+		dh_auto_build -B debian/build-$$pkg; \
+	done
+
+override_dh_auto_install:
+	set -e; \
+	for pkg in $(OFONO_PKGS); do \
+		dh_auto_install -B debian/build-$$pkg --destdir=debian/install-$$pkg; \
+	done
+
+override_dh_install:
+	set -e; \
+	for pkg in $(OFONO_PKGS); do \
+		dh_install --sourcedir=debian/install-$$pkg \
+			-p$${pkg}-apndb-plugin; \
+	done
+
+override_dh_missing:
+	dh_missing --fail-missing
