@@ -1,18 +1,16 @@
 Source: ofono-apndb-plugin
 Priority: optional
-Maintainer: Ratchanan Srirattanamet <ratchanan@ubports.com>
+Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 Build-Depends:
     cmake,
     debhelper-compat (= 12),
     libglib2.0-dev,
     ofono-dev,
-    ofono-sailfish-dev,
-    ofono-ubports-dev,
 Standards-Version: 4.6.0
 Section: libs
-Homepage: http://gitlab.com/ubports/development/core/ofono-apndb-plugin
-Vcs-Browser: http://gitlab.com/ubports/development/core/ofono-apndb-plugin
-Vcs-Git: http://gitlab.com/ubports/development/core/ofono-apndb-plugin.git
+Homepage: https://github.com/rilmodem/ofono
+Vcs-Browser: http://github.com/FuriLabs/ofono-apndb-plugin
+Vcs-Git: http://github.com/FuriLabs/ofono-apndb-plugin.git
 Rules-Requires-Root: no
 
 Package: ofono-apndb-plugin
@@ -22,43 +20,6 @@ Depends:
     ${shlibs:Depends},
     ${misc:Depends},
     ofono,
-Conflicts:
-    ofono-sailfish,
-    ofono-ubports,
-Recommends:
-    lineageos-apndb,
-Description: oFono apndb provisioning plugin - built against Sailfish fork
+Description: oFono apndb provisioning plugin
  Apndb is an XML format used by Android for their APN database. This plugin
  allows oFono to use such database.
- .
- This package is built against upstream variant of oFono.
-
-Package: ofono-sailfish-apndb-plugin
-Architecture: any
-Multi-Arch: same
-Depends:
-    ${shlibs:Depends},
-    ${misc:Depends},
-    ofono-sailfish,
-Recommends:
-    lineageos-apndb,
-Description: oFono apndb provisioning plugin - built against Sailfish fork
- Apndb is an XML format used by Android for their APN database. This plugin
- allows oFono to use such database.
- .
- This package is built against ofono-sailfish variant of oFono.
-
-Package: ofono-ubports-apndb-plugin
-Architecture: any
-Multi-Arch: same
-Depends:
-    ${shlibs:Depends},
-    ${misc:Depends},
-    ofono-ubports,
-Recommends:
-    lineageos-apndb,
-Description: oFono apndb provisioning plugin - built against Sailfish fork
- Apndb is an XML format used by Android for their APN database. This plugin
- allows oFono to use such database.
- .
- This package is built against ofono-ubports variant of oFono.

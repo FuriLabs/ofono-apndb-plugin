@@ -9,7 +9,7 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 # see ENVIRONMENT in dpkg-buildflags(1)
 export DEB_CFLAGS_MAINT_APPEND = -Werror -Wall -pedantic -Wno-error=pedantic -Wno-error=variadic-macros
 
-OFONO_PKGS := ofono ofono-sailfish ofono-ubports
+OFONO_PKGS := ofono
 
 %:
 	dh $@
