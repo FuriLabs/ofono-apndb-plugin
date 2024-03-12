@@ -45,7 +45,7 @@
 
 #ifndef SYSTEM_APNDB_PATH
 #define SYSTEM_APNDB_PATH     "/system/etc/apns-conf.xml"
-#define CUSTOM_APNDB_PATH     "/custom/etc/apns-conf.xml"
+#define CUSTOM_APNDB_PATH     "/usr/share/lineageos-apn-conf/apns-conf.xml"
 #endif
 
 struct apndb_data {
