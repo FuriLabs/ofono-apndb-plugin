@@ -1,1 +1,1 @@
-usr/lib/*/ofono/plugins/apndbplugin.so
+debian/10-apndb.conf /usr/lib/systemd/system/ofono.service.d/
