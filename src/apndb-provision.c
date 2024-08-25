@@ -151,6 +151,12 @@ static int provision_get_settings(const char *mcc, const char *mnc,
 
 		memcpy(*settings + i, &ap->gprs_data, sizeof(ap->gprs_data));
 
+                ofono_info("Carrier info: Name='%s', APN='%s', Type=%s, Username='%s', "
+                           "Message Proxy='%s', Message Center='%s'",
+                           ap->gprs_data.name, ap->gprs_data.apn,
+                           mbpi_ap_type(ap->gprs_data.type), ap->gprs_data.username,
+                           ap->gprs_data.message_proxy, ap->gprs_data.message_center);
+
 		g_free(ap);
 	}
 

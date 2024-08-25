@@ -284,6 +284,7 @@ static void toplevel_apndb_start(GMarkupParseContext *context,
 	const gchar *mmscenter = NULL;
 	const gchar *mvnomatch = NULL;
 	const gchar *mvnotype = NULL;
+	const gchar *user_visible = NULL;
 	enum ofono_gprs_proto proto = OFONO_GPRS_PROTO_IP;
 	enum ofono_gprs_context_type type;
 
@@ -297,16 +298,21 @@ static void toplevel_apndb_start(GMarkupParseContext *context,
 			mcc = attribute_values[i];
 		else if (g_strcmp0(attribute_names[i], "mnc") == 0)
 			mnc = attribute_values[i];
+		else if (g_strcmp0(attribute_names[i], "user_visible") == 0)
+			user_visible = attribute_values[i];
 	}
 
+	if (g_strcmp0(user_visible, "false") == 0)
+		return;
+
 	if (mcc == NULL) {
-		ofono_error("%s: apn for %s missing 'mcc' attribute", __func__,
+		DBG("%s: apn for %s missing 'mcc' attribute", __func__,
 				carrier);
 		return;
 	}
 
 	if (mnc == NULL) {
-		ofono_error("%s: apn for %s missing 'mnc' attribute", __func__,
+		DBG("%s: apn for %s missing 'mnc' attribute", __func__,
 				carrier);
 		return;
 	}
